@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Site - ASL Now Widget</title>
+    
+    <!-- ASL Now Widget Embed Code (Local Testing Version) -->
+    <script>
+        // Local testing version - loads widget from your local Laravel server
+        (function() {
+            // Use 50.csd.org as the test domain
+            window.ASL_NOW_DOMAIN = '50.csd.org';
+            
+            // Load the local widget script
+            var script = document.createElement('script');
+            script.src = '/js/widget.js';
+            script.async = true;
+            script.onload = function() {
+                console.log('ASL Now local widget loaded successfully!');
+            };
+            script.onerror = function() {
+                console.error('Failed to load ASL Now local widget');
+            };
+            document.head.appendChild(script);
+        })();
+    </script>
+    <!-- End of ASL Now -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .content {
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            margin-top: 40px;
+        }
+        .widget-info {
+            background-color: #e7f3ff;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Welcome to Our Test Website</h1>
+            <p>This is a fake website to test the ASL Now accessibility widget</p>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2>About Our Company</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+
+            <div class="section">
+                <h2>Our Services</h2>
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                
+                <ul>
+                    <li>Web Development</li>
+                    <li>Mobile Applications</li>
+                    <li>Digital Marketing</li>
+                    <li>Accessibility Solutions</li>
+                </ul>
+            </div>
+
+            <div class="widget-info">
+                <h3>🔧 Widget Testing Instructions</h3>
+                <p><strong>How to test the widget:</strong></p>
+                <ol>
+                    <li>Make sure your Laravel app is running at <code>http://127.0.0.1:8000</code></li>
+                    <li>Create an organization in the dashboard</li>
+                    <li>Customize the widget colors and settings</li>
+                    <li>Copy the embed code from the dashboard</li>
+                    <li>Replace the script tag below with your generated code</li>
+                    <li>Refresh this page to see your widget in action!</li>
+                </ol>
+            </div>
+
+            <div class="section">
+                <h2>Contact Information</h2>
+                <p>Feel free to reach out to us for more information about our services and accessibility solutions.</p>
+                <p><strong>Email:</strong> contact@testsite.com<br>
+                <strong>Phone:</strong> (555) 123-4567</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 Test Website. All rights reserved.</p>
+    </div>
+
+</body>
+</html>

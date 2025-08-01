@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASL Now - Widget</title>
+    <link rel="icon" href="./assets/images/ASLNow.png">
+    <link href="./assets/style/style.css" rel="stylesheet">
+    <link href="./assets/style/aslnow-style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- BEGIN ASL-Now WIDGET -->
+    <div id="ASLNow" position="bottom-right" direction="ltr" display="false" role="dialog" aria-label="ASL Now Accessibility Widget" aria-modal="true" aria-hidden="true" tabindex="-1">
+        <!-- BEGIN ASL-Now FLOATING BOX -->
+        <div class="ASLNow_contactList_container">
+            <!-- BEGIN ASL-Now CONTACT LIST -->
+            <div class="ASLNow_contactList">
+                <!-- BEGIN ASL-Now CONTACT LIST HEADER -->
+                <div class="ASLNow_contactList_header">
+                    <img src="./assets/images/aslnow/ca_connect_ondark_horiz.png" alt="CA Connect logo">
+                </div>
+                <!-- END ASL-Now CONTACT LIST HEADER -->
+
+                <!-- BEGIN ASL-Now CTA BUTTONS -->
+                <div class="ASLNow_contactList_body">
+
+                    <!-- HEADER -->
+                    <div class="ASLNow_contactList_body_header">
+                        <h2>ASL Customer Service</h2>
+                    </div>
+
+                    <!-- END HEADER -->
+
+                    <!-- VIDEO HOLDER -->
+                    <div class="video-mp4">
+                        <video id="aslnowVideo" width="320" height="240" controls muted aria-label="ASL Now demonstration video" aria-describedby="video-description">
+                            <source src="assets/images/aslnow/aslnow-video.mp4" type="video/mp4">
+                            <track kind="captions" src="assets/images/aslnow/aslnow-video-captions.vtt" srclang="en" label="English captions" default>
+                            <track kind="descriptions" src="assets/images/aslnow/aslnow-video-descriptions.vtt" srclang="en" label="English descriptions">
+                            Your browser does not support the video tag. <a href="assets/images/aslnow/aslnow-video.mp4">Download the video</a>
+                        </video>
+                        <div id="video-description" class="sr-only">Demonstration video showing how to use ASL Now video calling service</div>
+                        <p>You can connect with our representative via live video in ASL or via text chat.</p>
+                    </div>
+                    <!-- END VIDEO HOLDER -->
+                    <div>
+                    <nav aria-label="Service options">
+                    <ul role="list">
+                        <li info-target-name="info-1" role="listitem">
+                            <button type="button" class="service-option-btn" aria-describedby="video-chat-desc" tabindex="0">
+                                <img src="./assets/images/aslnow/aslnow_icon_white.png" alt="Video chat icon">
+                                <div class="ASLNow_contactList_body_content">
+                                    <h3>Video Chat</h3>
+                                    <span id="video-chat-desc" class="service-description">Connect via live video in ASL</span>
+                                </div>
+                            </button>
+                        </li>
+                        <li info-target-name="info-2" role="listitem">
+                            <button type="button" class="service-option-btn" aria-describedby="text-chat-desc" tabindex="0">
+                                <img src="./assets/images/aslnow/text_chat_icon_white.png" alt="Text chat icon">
+                                <div class="ASLNow_contactList_body_content">
+                                    <h3>Text Chat</h3>
+                                    <span id="text-chat-desc" class="service-description">Connect via text messaging</span>
+                                </div>
+                            </button>
+                        </li>
+                        <li info-target-name="info-3" role="listitem">
+                            <button type="button" class="service-option-btn" aria-describedby="contact-me-desc" tabindex="0">
+                                <img src="./assets/images/aslnow/contact_me_icon_white.png" alt="Contact form icon">
+                                <div class="ASLNow_contactList_body_content">
+                                    <h3>Contact Me</h3>
+                                    <span id="contact-me-desc" class="service-description">Send us a message</span>
+                                </div>
+                            </button>
+                        </li>
+                    </ul>
+                    </nav>
+                    </div>
+                      <!-- BEGIN ASL-Now CONTACT LIST FOOTER -->
+                 <div class="ASLNow_contactList_footer">
+                   <p><a href="https://aslnow.com/directory/" target="_blank">Tech Support</a> | <a href="https://aslnow.com/privacy-policy/" target="_blank">Privacy Policy</a></p>
+                    <p><a class="aslLogo" href="https://www.aslnow.com" target="_blank" title="ASL Now - Powered by CSD"><img src="./assets/images/aslnow/asl-now-horizontal-color.png" alt="ASL Now - Powered by CSD logo"/></a></p>
+                </div>
+                <!-- END ASL-Now CONTACT LIST FOOTER -->
+                </div>
+                <!-- END ASL-Now CTA BUTTONS -->
+                
+
+            </div>
+            <!-- END ASL-Now CONTACT LIST -->
+
+            <!-- BEGIN ASL-Now CONTACT INFORMATIONS -->
+            <div class="ASLNow_contactInfo" info-name="info-1" role="tabpanel" aria-labelledby="video-chat-tab">
+                <div class="ASL_Now_header">
+                    <button class="ASLNow_contactInfo_backToList" type="button" aria-label="Go back to service options">
+                        <span aria-hidden="true">←</span>
+                        <span>Back</span>
+                    </button>
+                </div>
+                <div class="ASLNow_contactInfo_body">
+                    <h4 id="video-chat-tab">Video Chat</h4>
+                    <div class="ASLNow_contactInfo_contactWaysList">
+                            <div class="ASLNow_contactList_body_content">
+                                <a href="https://connectdirect.aslnow.io/app/8/10051?exitURL=https://www.surveymonkey.com/r/PSB6CLN" class="video-chat-btn" target="_blank" rel="noopener noreferrer" aria-describedby="video-chat-external">
+                                <img src="./assets/images/aslnow/ASL Now - Vertical.png" alt="ASL Now logo">
+                                <span>Start a Video Chat with an ASL Representative</span>
+                                <span id="video-chat-external" class="sr-only">(opens in new window)</span>
+                                </a>
+                            </div>
+                    </div>
+                    <div class="ASLNow_contactInfo_footer">
+                       <p><a href="https://aslnow.com/directory/" target="_blank">Tech Support</a> | <a href="https://aslnow.com/privacy-policy/" target="_blank">Privacy Policy</a></p>
+                        <p><a class="aslLogo" href="https://www.aslnow.com" target="_blank" title="ASL Now - Powered by CSD"><img src="./assets/images/aslnow/asl-now-horizontal-color.png" alt="ASL Now - Powered by CSD logo"/></a></p>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div class="ASLNow_contactInfo" info-name="info-2" role="tabpanel" aria-labelledby="text-chat-tab">
+                <div class="ASL_Now_header">
+                    <button class="ASLNow_contactInfo_backToList" type="button" aria-label="Go back to service options">
+                        <span aria-hidden="true">←</span>
+                        <span>Back</span>
+                    </button>
+                </div>
+                <div class="ASLNow_contactInfo_body">
+                    <h4 id="text-chat-tab">Text Chat</h4>
+                    <div class="ASLNow_contactInfo_contactWaysList">
+                        <div>
+                            <img src="./assets/images/aslnow/text_chat_screen.png" alt="Screenshot of text chat interface showing conversation">
+                           </div>
+                    </div>
+                    <div class="ASLNow_contactInfo_footer">
+                       <p><a href="https://aslnow.com/directory/" target="_blank">Tech Support</a> | <a href="https://aslnow.com/privacy-policy/" target="_blank">Privacy Policy</a></p>
+                        <p><a class="aslLogo" href="https://www.aslnow.com" target="_blank" title="ASL Now - Powered by CSD"><img src="./assets/images/aslnow/asl-now-horizontal-color.png" alt="ASL Now - Powered by CSD logo"/></a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="ASLNow_contactInfo" info-name="info-3" role="tabpanel" aria-labelledby="contact-me-tab">
+                <div class="ASL_Now_header">
+                    <button class="ASLNow_contactInfo_backToList" type="button" aria-label="Go back to service options">
+                        <span aria-hidden="true">←</span>
+                        <span>Back</span>
+                    </button>
+                </div>
+                <div class="ASLNow_contactInfo_body">
+                    <h4 id="contact-me-tab">Contact Me</h4>
+                    <p>Please leave your message and we'll get back to you shortly.</p>
+                    <div class="ASLNow_contactInfo_contactWaysList">
+                        <div class="widget_form">
+                            <form class="message_form" aria-labelledby="contact-me-tab">
+                            <label for="contact_name">What is your name? <span aria-label="required">*</span></label>
+                            <input id="contact_name" name="contact_name" type="text" placeholder="Your name" required aria-describedby="name-error"/>
+                            <div id="name-error" class="error-message" role="alert" aria-live="polite"></div>
+                            
+                            <label for="contact_email">What is your email? <span aria-label="required">*</span></label>
+                            <input id="contact_email" name="contact_email" type="email" placeholder="your.email@example.com" required aria-describedby="email-error"/>
+                            <div id="email-error" class="error-message" role="alert" aria-live="polite"></div>
+                            
+                            <label for="contact_message">Your message <span aria-label="required">*</span></label>
+                            <textarea id="contact_message" name="contact_message" rows="4" placeholder="Your message" required aria-describedby="message-error"></textarea>
+                            <div id="message-error" class="error-message" role="alert" aria-live="polite"></div>
+                            
+                            <button type="submit" aria-describedby="form-status">Send Message</button>
+                            <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="ASLNow_contactInfo_footer">
+                        <p><a href="https://aslnow.com/directory/" target="_blank">Tech Support</a> | <a href="https://aslnow.com/privacy-policy/" target="_blank">Privacy Policy</a></p>
+                        <p><a class="aslLogo" href="https://www.aslnow.com" target="_blank" title="ASL Now - Powered by CSD"><img src="./assets/images/aslnow/asl-now-horizontal-color.png" alt="ASL Now - Powered by CSD logo"/></a></p>
+                    </div>
+                </div>
+            </div>
+            <!-- END ASL-Now CONTACT INFORMATIONS -->
+        </div>
+        <!-- END ASL-Now FLOATING BOX -->
+
+        <!-- BEGIN ASL-Now ACTION BUTTON -->
+        <button class="ASLNow_btn" type="button" aria-label="Open ASL Now accessibility widget" aria-expanded="false" aria-controls="ASLNow" aria-haspopup="dialog" tabindex="0">
+            <span class="ASLNow_btn_icon" aria-hidden="true">
+                <img id="aslImg" src="./assets/images/aslnow/asl-now-horizontal-color.png" alt="">
+            </span>
+            <span class="ASLNow_btn_text">ASL Now</span>
+        </button>
+        <!-- END ASL-Now ACTION BUTTON -->
+    </div>
+    <!-- END ASL-Now WIDGET -->
+
+    <script src="./assets/script/aslnow-script.js"></script>
+
+</body>
+
+</html>

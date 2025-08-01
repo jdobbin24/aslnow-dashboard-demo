@@ -5,24 +5,307 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test Site - ASL Now Widget</title>
     
-    <!-- ASL Now Widget Embed Code (Local Testing Version) -->
+    <!-- ASL Now Widget Embed Code (GitHub Pages Version) -->
     <script>
-        // Local testing version - loads widget from your local Laravel server
+        // Static widget configuration for demo purposes
         (function() {
-            // Use 50.csd.org as the test domain
-            window.ASL_NOW_DOMAIN = '50.csd.org';
+            'use strict';
             
-            // Load the local widget script
-            var script = document.createElement('script');
-            script.src = '/js/widget.js';
-            script.async = true;
-            script.onload = function() {
-                console.log('ASL Now local widget loaded successfully!');
+            // Static widget configuration
+            const staticWidgetData = {
+                theme: {
+                    tab_text: 'ASL Now',
+                    asl_button_text: 'ASL Chat',
+                    text_chat_button_text: 'Text Chat',
+                    tab_background_color: '#007cba',
+                    tab_text_color: '#ffffff',
+                    primary_color: '#007cba',
+                    secondary_color: '#ffffff',
+                    button_text_color: '#ffffff',
+                    position: 'bottom-right',
+                    widget_type: 'ca_connect'
+                },
+                organization: {
+                    name: 'Demo Organization'
+                }
             };
-            script.onerror = function() {
-                console.error('Failed to load ASL Now local widget');
-            };
-            document.head.appendChild(script);
+            
+            let widgetElement = null;
+            let isWidgetOpen = false;
+            
+            // Create widget HTML structure
+            function createWidget() {
+                const theme = staticWidgetData.theme || {};
+                const org = staticWidgetData.organization || {};
+            
+                // Create widget container
+                widgetElement = document.createElement('div');
+                widgetElement.id = 'asl-now-widget';
+                widgetElement.innerHTML = `
+                    <div class="widget-tab" id="widget-tab">
+                        <span class="widget-title">${theme.tab_text || 'ASL Now'}</span>
+                        <button class="widget-close" id="widget-close" style="display: none;">&times;</button>
+                    </div>
+                    <div class="widget-panel" id="widget-panel">
+                        <div class="widget-content">
+                            <div class="widget-buttons">
+                                <button class="widget-btn asl-btn" id="asl-btn">
+                                    <svg class="dcaslchaticon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 49.5" style="width: 24px; height: 24px;"><path d="M44.6 23.9c1.3-0.9 2.1-2.3 2.1-3.9 0-2.6-2.1-4.8-4.8-4.8s-4.8 2.1-4.8 4.8c0 2.2 1.5 4.1 3.6 4.6 -2.5 1.2-4.3 3.9-4.3 6.9l-0.1 3.4 11-4.9C47.4 29.9 47.8 24.8 44.6 23.9z" /><path d="M66 11.4c0-0.9-0.9-1.3-1.8-0.9l-5.1 2.7c-0.5 0.3-0.9 0.8-0.9 1.4l0.1 4.5c0 0.6 0.4 1 0.9 1.1l5.1 0.8c0.9 0.1 1.8-0.7 1.7-1.5L66 11.4z" /><path d="M53.5 4.6L38.8 9.9c-1.1 0.4-1.6 1.7-1.1 2.7v0c0.5 0.9 1.5 1.3 2.4 0.9l12.1-4.4v20.8l-2.1 1c-0.7 0.3-1.1 1-1.1 1.8l0 4.2 -3.3-2.8c-0.6-0.5-1.4-0.6-2.1-0.3L32.9 39l-1.5 0.7v-3.4 -1h1c0.2 0 0.4-0.1 0.6-0.2 0.1 0 0.1-0.1 0.1-0.2 0.1-0.1 0.1-0.3 0.1-0.4 0-0.1 0-0.3-0.1-0.4 0 0 0 0 0 0l-3-4.5c-0.1-0.2-0.3-0.2-0.5-0.3 -0.1-0.1-0.2-0.1-0.4-0.1 -0.3 0-0.5 0.2-0.7 0.4L25.6 34c0 0.1-0.1 0.2-0.1 0.3 0 0.2 0 0.4 0.1 0.6 0.1 0.2 0.3 0.4 0.6 0.4 0.1 0 0.2 0.1 0.3 0.1h0.8v2.4 5.1c0 0.4 0.1 0.8 0.4 1.2 0.3 0.4 0.7 0.7 1.2 0.8 0.2 0.1 0.4 0.1 0.6 0.1 0.3 0 0.6-0.1 0.8-0.2l13.9-6.8 5.5 4.7c0.7 0.6 1.7 0.6 2.5 0 0.5-0.4 0.7-1 0.7-1.6l-0.1-7.1 2.1-1c0.7-0.3 1.1-1 1.1-1.8V6.5c0-0.4-0.1-0.8-0.3-1.1C55.3 4.6 54.3 4.3 53.5 4.6z" /><path d="M20.7 26.7c0 0 0 0 0 0 -0.1 0-0.2 0-0.3 0 1.5-0.8 2.5-2.4 2.5-4.2 0-2.6-2.1-4.8-4.8-4.8s-4.8 2.1-4.8 4.8c0 2.3 1.6 4.2 3.7 4.6 -3.1 1.5-3.8 5.7-3.8 8.9l10.7-3.4C24 32.6 24.4 27.2 20.7 26.7z" /><path d="M32.9 35c0.1 0 0.1-0.1 0.1-0.2 0-0.1 0.1-0.1 0.1-0.2 0 0.1 0 0.1-0.1 0.2C33 34.9 33 35 32.9 35z" /><path d="M35.7 14.2c-0.1-0.3-0.4-0.4-0.7-0.4h-1v-2.5V6.2c0-0.4-0.1-0.8-0.4-1.2 -0.4-0.5-1-0.8-1.6-0.8 -0.3 0-0.6 0.1-0.8 0.2 0 0 0 0 0 0L25.3 7.3l-8.2 3.9 -5.5-4.7c-0.7-0.6-1.7-0.6-2.5 0C8.6 6.9 8.4 7.5 8.4 8.1l0.1 7.1L6.3 16.1c-0.7 0.3-1.1 1-1.1 1.8v24.7c0 0.4 0.1 0.8 0.3 1.1 0 0 0 0 0 0l0 0c0.5 0.8 1.5 1.1 2.3 0.8l14.4-5.2c1.1-0.4 1.6-1.6 1.1-2.6v0c-0.4-0.9-1.4-1.3-2.4-1L9.1 39.9V21l0 0v-0.7l0 0v-1.1l0 0v0l2.1-1c0.7-0.3 1.2-1 1.1-1.8l0-4.2 3.3 2.8c0 0 0 0 0.1 0 0.6 0.5 1.4 0.6 2 0.2l12.4-6v3.4 1.1 0H29.1c-0.1 0-0.3 0-0.4 0.1 -0.1 0.1-0.2 0.2-0.3 0.3 -0.1 0.3-0.1 0.6 0.1 0.8l0 0 3 4.4c0.2 0.2 0.4 0.3 0.7 0.4 0.1 0 0.3 0 0.4-0.1 0.1-0.1 0.2-0.1 0.3-0.3l2.8-4.5c0.1-0.1 0.1-0.2 0.1-0.2C35.8 14.6 35.8 14.4 35.7 14.2z" /></svg>
+                                    <span>${theme.asl_button_text || 'ASL Chat'}</span>
+                                </button>
+                                <button class="widget-btn text-chat-btn" id="text-chat-btn">
+                                    <svg class="dctextchaticon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 49.5" style="width: 24px; height: 24px;"><path d="M59.1 3.7L43.8 9.2c-1.1 0.4-1.7 1.8-1.1 2.8l0 0c0.5 0.9 1.5 1.3 2.5 1l12.6-4.6v21.7l-2.2 1c-0.7 0.3-1.2 1.1-1.2 1.9l0 4.4 -3.4-2.9c-0.6-0.5-1.5-0.6-2.2-0.3l-11.2 5.4L36 40.4v-3.5 -1.1h1c0.2 0 0.5-0.1 0.6-0.3 0.1-0.1 0.1-0.1 0.1-0.2 0.1-0.1 0.1-0.3 0.1-0.4 0-0.1-0.1-0.3-0.1-0.4 0 0 0 0 0 0l-3.2-4.7c-0.1-0.2-0.3-0.3-0.5-0.3 -0.1-0.1-0.3-0.1-0.4-0.1 -0.3 0-0.5 0.2-0.7 0.4l-2.9 4.7c0 0.1-0.1 0.2-0.1 0.3 0 0.2 0 0.4 0.1 0.6 0.1 0.2 0.4 0.4 0.6 0.4 0.1 0 0.2 0.1 0.3 0.1h0.9v2.5 5.3c0 0.4 0.1 0.9 0.4 1.2 0.3 0.4 0.8 0.7 1.2 0.8 0.2 0.1 0.4 0.1 0.6 0.1 0.3 0 0.6-0.1 0.9-0.2l14.5-7.1 5.8 4.9c0.7 0.6 1.8 0.7 2.6 0 0.5-0.4 0.7-1 0.7-1.6l-0.1-7.4 2.2-1c0.7-0.3 1.2-1 1.2-1.8V5.7c0-0.4-0.1-0.8-0.3-1.1C61 3.7 60 3.4 59.1 3.7z" /><path d="M37.6 35.5c0.1-0.1 0.1-0.1 0.1-0.2 0-0.1 0.1-0.1 0.1-0.2 0 0.1 0 0.2-0.1 0.2C37.7 35.4 37.7 35.4 37.6 35.5z" /><path d="M40.5 13.8c-0.1-0.3-0.4-0.4-0.7-0.4h-1.1v-2.6V5.4c0-0.4-0.1-0.9-0.4-1.2 -0.4-0.6-1-0.8-1.6-0.8 -0.3 0-0.6 0.1-0.9 0.2 0 0 0 0 0 0l-6.1 3 -8.5 4.1 -5.8-4.9c-0.7-0.6-1.8-0.6-2.6 0 -0.5 0.4-0.7 1-0.7 1.7l0.1 7.4 -2.2 1c-0.7 0.3-1.2 1.1-1.2 1.8v25.8c0 0.4 0.1 0.8 0.3 1.2 0 0 0 0 0 0l0 0c0.5 0.8 1.5 1.1 2.4 0.9l15-5.4c1.1-0.4 1.7-1.7 1.1-2.8l0 0c-0.4-0.9-1.5-1.3-2.5-1L12.7 40.6V20.8l0 0v-0.8l0 0v-1.2l0 0v0l2.2-1c0.7-0.3 1.2-1.1 1.2-1.9l0-4.4 3.4 2.9c0 0 0 0 0.1 0 0.6 0.5 1.4 0.6 2.1 0.3l13-6.2v3.6 1.2 0h-1c-0.1 0-0.3 0-0.4 0.1 -0.1 0.1-0.2 0.2-0.3 0.3 -0.1 0.3-0.1 0.6 0.1 0.9l0 0 3.2 4.6c0.2 0.2 0.4 0.3 0.7 0.4 0.2 0 0.3 0 0.4-0.1 0.1-0.1 0.2-0.2 0.3-0.3l2.9-4.7c0.1-0.1 0.1-0.2 0.1-0.2C40.6 14.2 40.6 14 40.5 13.8z" /><path d="M41.7 30.4c-0.5 0-1-0.3-1.2-0.8 -0.2-0.7 0.1-1.4 0.7-1.6l12.1-4.5c0.7-0.2 1.4 0.1 1.6 0.7 0.3 0.7-0.1 1.4-0.7 1.6l-12.1 4.5C42 30.4 41.8 30.4 41.7 30.4z" /><path d="M41.3 23.9c-0.5 0-1-0.3-1.2-0.8 -0.2-0.7 0.1-1.4 0.8-1.6l11.9-4.3c0.7-0.2 1.4 0.1 1.6 0.8 0.2 0.7-0.1 1.4-0.8 1.6L41.7 23.8C41.6 23.8 41.4 23.9 41.3 23.9z" /><path d="M17.9 31.8c-0.5 0-1-0.3-1.2-0.8 -0.2-0.7 0.1-1.4 0.8-1.6l12.1-4.4c0.7-0.2 1.4 0.1 1.6 0.8s-0.1 1.4-0.8 1.6l-12.1 4.4C18.2 31.8 18 31.8 17.9 31.8z" /><path d="M17.5 25.3c-0.5 0-1-0.3-1.2-0.8 -0.2-0.7 0.1-1.4 0.8-1.6l11.9-4.2c0.7-0.2 1.4 0.1 1.6 0.8 0.2 0.7-0.1 1.4-0.8 1.6L17.9 25.2C17.8 25.3 17.6 25.3 17.5 25.3z" /></svg>
+                                    <span>${theme.text_chat_button_text || 'Text Chat'}</span>
+                                </button>
+                            </div>
+                            <div class="widget-support-link" style="margin-top:16px;text-align:center;">
+                                <a href="https://aslnow.com/tech-support/" target="_blank" style="color:#007cba;text-decoration:underline;font-size:14px;">
+                                    Can't Connect?
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            
+                // Apply positioning
+                const position = theme.position || 'bottom-right';
+                widgetElement.className = `asl-widget asl-widget-${position}`;
+            
+                // Inject CSS
+                injectCSS(theme, org);
+            
+                // Add to page
+                document.body.appendChild(widgetElement);
+            
+                // Initialize attention animation
+                setTimeout(() => {
+                    const tab = document.getElementById('widget-tab');
+                    if(tab && !isWidgetOpen) tab.classList.add('tab-attention');
+                }, 100);
+            }
+            
+            // Inject widget styles
+            function injectCSS(theme, org) {
+                const css = `
+                    .asl-widget {
+                        position: fixed;
+                        z-index: 999999;
+                        font-family: Arial, sans-serif;
+                    }
+                    
+                    .asl-widget-bottom-right {
+                        bottom: 20px;
+                        right: 20px;
+                    }
+                    
+                    .asl-widget-bottom-left {
+                        bottom: 20px;
+                        left: 20px;
+                    }
+                    
+                    .asl-widget-top-right {
+                        top: 20px;
+                        right: 20px;
+                    }
+                    
+                    .asl-widget-top-left {
+                        top: 20px;
+                        left: 20px;
+                    }
+                    
+                    .widget-tab {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-around;
+                        background-color: ${theme.tab_background_color || theme.primary_color || '#007cba'};
+                        color: ${theme.tab_text_color || '#ffffff'};
+                        padding: 12px 8px 12px 20px;
+                        border-radius: 25px 25px 0 25px;
+                        cursor: pointer;
+                        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+                        transition: all 0.3s ease;
+                        user-select: none;
+                        min-width: 140px;
+                    }
+                    
+                    .widget-tab:hover {
+                        transform: translateY(-2px);
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                    }
+                    
+                    .widget-title {
+                        font-weight: bold;
+                        font-size: 14px;
+                    }
+                    
+                    .widget-close {
+                        background: none;
+                        border: none;
+                        color: inherit;
+                        font-size: 18px;
+                        cursor: pointer;
+                        margin-left: 10px;
+                    }
+                    
+                    .widget-panel {
+                        position: absolute;
+                        bottom: 60px;
+                        right: 0;
+                        width: 300px;
+                        background: white;
+                        border-radius: 15px;
+                        box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+                        display: none;
+                        overflow: hidden;
+                    }
+                    
+                    .widget-panel.open {
+                        display: block;
+                        animation: slideUp 0.3s ease-out;
+                    }
+                    
+                    .widget-content {
+                        padding: 20px;
+                    }
+                    
+                    .widget-buttons {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 10px;
+                    }
+                    
+                    .widget-btn {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        padding: 12px 16px;
+                        background-color: ${theme.primary_color || '#007cba'};
+                        color: ${theme.button_text_color || '#ffffff'};
+                        border: none;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        font-size: 14px;
+                        font-weight: 500;
+                        transition: all 0.2s ease;
+                    }
+                    
+                    .widget-btn:hover {
+                        background-color: ${theme.secondary_color || '#005a8b'};
+                        transform: translateY(-1px);
+                    }
+                    
+                    .widget-btn svg {
+                        fill: currentColor;
+                        flex-shrink: 0;
+                    }
+                    
+                    @keyframes slideUp {
+                        from {
+                            opacity: 0;
+                            transform: translateY(20px);
+                        }
+                        to {
+                            opacity: 1;
+                            transform: translateY(0);
+                        }
+                    }
+                    
+                    .tab-attention {
+                        animation: pulse 2s infinite;
+                    }
+                    
+                    @keyframes pulse {
+                        0% { transform: scale(1); }
+                        50% { transform: scale(1.05); }
+                        100% { transform: scale(1); }
+                    }
+                    
+                    @media (max-width: 768px) {
+                        .asl-widget-bottom-right {
+                            bottom: 10px;
+                            right: 10px;
+                        }
+                        
+                        .widget-panel {
+                            width: 280px;
+                        }
+                    }
+                `;
+                
+                // Inject CSS into page
+                const style = document.createElement('style');
+                style.textContent = css;
+                document.head.appendChild(style);
+            }
+            
+            // Event handlers
+            function attachEventListeners() {
+                const tab = document.getElementById('widget-tab');
+                const panel = document.getElementById('widget-panel');
+                const closeBtn = document.getElementById('widget-close');
+                const aslBtn = document.getElementById('asl-btn');
+                const textChatBtn = document.getElementById('text-chat-btn');
+                
+                if (tab) {
+                    tab.addEventListener('click', function() {
+                        if (isWidgetOpen) {
+                            closeWidget();
+                        } else {
+                            openWidget();
+                        }
+                    });
+                }
+                
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        closeWidget();
+                    });
+                }
+                
+                if (aslBtn) {
+                    aslBtn.addEventListener('click', function() {
+                        alert('ASL Chat functionality would connect to live ASL interpreter.');
+                    });
+                }
+                
+                if (textChatBtn) {
+                    textChatBtn.addEventListener('click', function() {
+                        alert('Text Chat functionality would open text-based chat.');
+                    });
+                }
+            }
+            
+            function openWidget() {
+                const panel = document.getElementById('widget-panel');
+                const closeBtn = document.getElementById('widget-close');
+                const tab = document.getElementById('widget-tab');
+                
+                if (panel) panel.classList.add('open');
+                if (closeBtn) closeBtn.style.display = 'inline';
+                if (tab) tab.classList.remove('tab-attention');
+                isWidgetOpen = true;
+            }
+            
+            function closeWidget() {
+                const panel = document.getElementById('widget-panel');
+                const closeBtn = document.getElementById('widget-close');
+                
+                if (panel) panel.classList.remove('open');
+                if (closeBtn) closeBtn.style.display = 'none';
+                isWidgetOpen = false;
+            }
+            
+            // Initialize widget when DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', function() {
+                    createWidget();
+                    attachEventListeners();
+                });
+            } else {
+                createWidget();
+                attachEventListeners();
+            }
         })();
     </script>
     <!-- End of ASL Now -->

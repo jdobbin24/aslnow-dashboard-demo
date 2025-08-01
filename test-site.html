@@ -11,12 +11,12 @@
         (function() {
             'use strict';
             
-            // Static widget configuration for Version 2
+            // Static widget configuration (will be modified by version switcher)
             const staticWidgetData = {
                 theme: {
-                    asl_now_header_text: 'ASL Customer Service',
-                    asl_now_description: 'Connect with our representative via live video in ASL or text chat for immediate assistance.',
-                    video_chat_button_text: 'Video Chat',
+                    // Version 1 (Original) Configuration
+                    tab_text: 'ASL Now',
+                    asl_button_text: 'ASL Chat',
                     text_chat_button_text: 'Text Chat',
                     tab_background_color: '#007cba',
                     tab_text_color: '#ffffff',
@@ -24,8 +24,13 @@
                     secondary_color: '#005a8b',
                     button_text_color: '#ffffff',
                     position: 'bottom-right',
-                    widget_type: 'asl_now',
-                    show_logos: true,
+                    widget_type: 'ca_connect', // Original widget type
+                    
+                    // Version 2 (Enhanced) Configuration (will be added when switching)
+                    asl_now_header_text: 'ASL Customer Service',
+                    asl_now_description: 'Connect with our representative via live video in ASL or text chat for immediate assistance.',
+                    video_chat_button_text: 'Video Chat',
+                    show_logos: false, // Start with no logo
                     logo_image_path: 'uploads/logos/test-logo.png',
                     video_file_path: 'uploads/videos/test-video.mp4'
                 },
@@ -599,8 +604,10 @@
                 v2Info.classList.add('active');
                 v1Info.classList.remove('active');
                 
-                // Update widget configuration
+                // Update widget configuration for Version 2
                 window.staticWidgetData.theme.widget_type = 'asl_now';
+                window.staticWidgetData.theme.show_logos = true; // Enable logo
+                window.staticWidgetData.theme.video_file_path = 'uploads/videos/test-video.mp4'; // Enable video
                 currentWidgetType = 'asl_now';
                 
                 // Remove existing widget

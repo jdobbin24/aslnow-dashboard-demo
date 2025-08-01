@@ -24,7 +24,7 @@
                     secondary_color: '#005a8b',
                     button_text_color: '#ffffff',
                     position: 'bottom-right',
-                    widget_type: 'ca_connect', // Original widget type
+                    widget_type: 'classic', // Original widget type
                     
                     // Version 2 (Enhanced) Configuration (will be added when switching)
                     asl_now_header_text: 'ASL Customer Service',
@@ -395,6 +395,15 @@
                 isWidgetOpen = false;
             }
             
+            // Expose functions to global scope for version switcher
+            window.staticWidgetData = staticWidgetData;
+            window.createWidget = createWidget;
+            window.attachEventListeners = attachEventListeners;
+            window.createWidgetVersion1 = createWidgetVersion1;
+            window.createWidgetVersion2 = createWidgetVersion2;
+            window.injectCSS = injectCSS;
+            window.initializeAttentionAnimation = initializeAttentionAnimation;
+            
             // Initialize widget when DOM is ready
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', function() {
@@ -627,11 +636,8 @@
             version1Btn.addEventListener('click', switchToVersion1);
             version2Btn.addEventListener('click', switchToVersion2);
             
-            // Start in version 2 state but show version 1 as active initially
-            version1Btn.classList.remove('active');
-            version2Btn.classList.add('active');
-            v1Info.classList.remove('active');
-            v2Info.classList.add('active');
+            // The widget starts with version 1, so buttons should match
+            // Version 1 is already active by default in the HTML
         });
     </script>
 
